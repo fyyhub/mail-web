@@ -293,7 +293,7 @@ async function loadInbox(showToast = false, addressOverride = null) {
         setSearchError(error.message || '提取失败');
 
         document.getElementById('selectedEmailAddr').textContent = address || '未选择邮箱';
-        document.getElementById('inboxHint').textContent = '请确认邮箱属于当前 API Key 对应账户，或稍后重试。';
+        document.getElementById('inboxHint').textContent = '请确认邮箱属于当前账户，或稍后重试。';
         document.getElementById('messageTotal').textContent = '查询失败';
 
         renderMessageListState(error.message || '提取失败', '请检查邮箱是否存在于当前账户下。', 'error');

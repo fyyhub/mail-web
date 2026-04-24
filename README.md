@@ -1,6 +1,6 @@
 # ChatTempMail 邮件查询服务
 
-封装 [chat-tempmail.com](https://chat-tempmail.com/zh/api-docs) 的 REST API，提供带密码保护的 Web 界面。
+封装 [chat-tempmail.com](https://chat-tempmail.com) 的网页端会话（通过账号密码登录），提供带密码保护的 Web 界面。不再使用 API Key（容易 429）。
 
 当前界面已精简为「输入一个邮箱地址 -> 提取该收件箱全部邮件 -> 查看邮件详情」的单一流程，不再展示邮箱列表或新建邮箱入口。
 
@@ -11,7 +11,7 @@
 - 📨 查看邮件列表和详情（HTML / 纯文本 / 原始 JSON 三种视图）
 - 🔄 邮件自动刷新（10 秒轮询）
 - ♻️ 自动翻页拉取全部邮件，而不只是第一页
-- 🛡️ API Key 不暴露到前端
+- 🛡️ 账号密码仅保存在服务端环境变量中，不暴露到前端
 
 ## 快速开始
 
@@ -26,8 +26,9 @@ pip install -r requirements.txt
 复制 `.env.example` 为 `.env` 并填入：
 
 ```bash
-TEMPMAIL_API_KEY=你在 chat-tempmail.com 个人中心生成的 API Key
-ACCESS_PASSWORD=你想设置的访问密码
+TEMPMAIL_USERNAME=你在 chat-tempmail.com 的登录用户名
+TEMPMAIL_PASSWORD=你在 chat-tempmail.com 的登录密码
+ACCESS_PASSWORD=你想设置的本服务访问密码
 PORT=8899
 ```
 
@@ -85,6 +86,6 @@ tempmail_service/
 
 ## 安全说明
 
-- API Key 仅保存在服务端环境变量中，不会发送到前端。
+- 网页端账号密码仅保存在服务端环境变量中，不会发送到前端。
 - 访问密码对比使用 `secrets.compare_digest` 防止计时攻击。
 - 登录后通过 Flask session（签名 cookie）维持会话，每次服务启动会重新生成 secret。
